@@ -1,0 +1,163 @@
+eggs:
+  stone:
+    blocks: 10000
+    fortune-boost-min: 1.05
+    fortune-boost-max: 1.1
+    sell-boost-min: 1.1
+    sell-boost-max: 1.2
+    color1: "<#6D6D6D>"
+    color2: "<#A9A9A9>"
+    texture: "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvZDBmZDViMmMzM2ViNjJmMDRhODhjNjY5ZjJmNmRhMjVlMjRiYzk0YmE4N2I5N2IwZjhkMjc5M2JmYjdmM2Y1In19fQ=="
+  iron:
+    blocks: 40000
+    fortune-boost-min: 1.1
+    fortune-boost-max: 1.5
+    sell-boost-min: 1.2
+    sell-boost-max: 1.5
+    color1: "<#4C4F56>"
+    color2: "<#7F858C>"
+    texture: "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvNTM5YTFjOTBhMzY3YzQ0ZmFhNDlkMGUyNzM0ODc3NzBmMmUzZjgzZGNiMWViYTZkNzU4YjQ3MzBhZTVmOTY4OCJ9fX0="
+  gold:
+    blocks: 90000
+    fortune-boost-min: 1.5
+    fortune-boost-max: 2.5
+    sell-boost-min: 1.5
+    sell-boost-max: 2.0
+    color1: "<#B78628>"
+    color2: "<#FFD70>"
+    texture: "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvMTUxNTk5ZjY2ZTgzZGE1NTVjZjliOGI3ZTVhMzc5ZDBkZWFiMjFjMmVlZTkwOWQxODM3MzIzZGIwODkzYmYzOCJ9fX0="
+  diamond:
+    blocks: 150000
+    fortune-boost-min: 2.5
+    fortune-boost-max: 3.5
+    sell-boost-min: 2.0
+    sell-boost-max: 2.5
+    color1: "<#3A89C9>"
+    color2: "<#85E3FF>"
+    texture: "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvNzYxMDU1ZDcyZTBhYThhMTYyYjQwNDczZTMwNzQ4ZjczMzExNjcwMGIwNGJlNmFjOWExZTgxNjFjYTc3YWYwYyJ9fX0="
+  dragon:
+    blocks: 300000
+    fortune-boost-min: 3.5
+    fortune-boost-max: 5.0
+    sell-boost-min: 2.5
+    sell-boost-max: 3.5
+    lucky-block-nuker-min: 3
+    lucky-block-nuker-max: 10
+    color1: "<#8B0000>"
+    color2: "<#FF4500>"
+    texture: "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvZWZlYzNlMjQ1NTE3MjZjYjNkNjRjYmQxNjA0YTFhOWY4YTFlMTE2OTM3MjJhOGFhZDUxMDlhMWZmZmE4ZDQzYyJ9fX0="
+
+pets:
+  stone:
+    lady_bug:
+      color1: "#6B4226"
+      color2: "#A0522D"
+      chance: 0.5
+    snail:
+      color1: "#4F4F2F"
+      color2: "#808060"
+      chance: 0.3
+    hedgehog:
+      color1: "#4A2C2A"
+      color2: "#8B4513"
+      chance: 0.15
+    white_rabbit:
+      color1: "#DCDCDC"
+      color2: "#F5F5F5"
+      chance: 0.04
+    brown_rabbit:
+      color1: "#8B4513"
+      color2: "#CD853F"
+      chance: 0.01
+  iron:
+    opossum:
+      color1: "#696969"
+      color2: "#A9A9A9"
+      chance: 0.5
+    seal:
+      color1: "#556B2F"
+      color2: "#6B8E23"
+      chance: 0.3
+    badger:
+      color1: "#333333"
+      color2: "#BEBEBE"
+      chance: 0.15
+    beaver:
+      color1: "#8B4513"
+      color2: "#DEB887"
+      chance: 0.045
+    turtle:
+      color1: "#2E8B57"
+      color2: "#66CDAA"
+      chance: 0.004
+    crocodile:
+      color1: "#556B2F"
+      color2: "#6B8E23"
+      chance: 0.001
+  gold:
+    deer:
+      color1: "#8B4513"
+      color2: "#F4A460"
+      chance: 0.5
+    gazelle:
+      color1: "#D2691E"
+      color2: "#FF8C00"
+      chance: 0.3
+    red_panda:
+      color1: "#8B0000"
+      color2: "#FF4500"
+      chance: 0.15
+    bison:
+      color1: "#5E2605"
+      color2: "#A0522D"
+      chance: 0.04
+    lion:
+      color1: "#FFD700"
+      color2: "#FFE135"
+      chance: 0.01
+  diamond:
+    arctic_fox:
+      color1: "#B0C4DE"
+      color2: "#DCDCDC"
+      chance: 0.5
+    narwhal:
+      color1: "#4682B4"
+      color2: "#87CEFA"
+      chance: 0.3
+    pegasus:
+      color1: "#5F9EA0"
+      color2: "#AFEEEE"
+      chance: 0.15
+    griffin:
+      color1: "#778899"
+      color2: "#D3D3D3"
+      chance: 0.04
+    unicorn:
+      color1: "#8A2BE2"
+      color2: "#DA70D6"
+      chance: 0.01
+  dragon:
+    killer_whale:
+      color1: "#000000"
+      color2: "#1E90FF"
+      chance: 0.5
+    hippogriff:
+      color1: "#8B4513"
+      color2: "#CD853F"
+      chance: 0.3
+    hippocampus:
+      color1: "#2E8B57"
+      color2: "#66CDAA"
+      chance: 0.15
+    silver_dragon:
+      color1: "#C0C0C0"
+      color2: "#E5E5E5"
+      chance: 0.04
+    red_dragon:
+      color1: "#8B0000"
+      color2: "#FF4500"
+      chance: 0.01
+    black_dragon:
+      color1: "#000000"
+      color2: "#696969"
+      chance: 0.01

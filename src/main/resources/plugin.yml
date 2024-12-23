@@ -1,0 +1,5 @@
+name: QuarryPets
+version: '1.0.0'
+main: codes.kooper.quarryPets.QuarryPets
+api-version: '1.21'
+depend: [KoopKore]
