@@ -3,6 +3,7 @@ package codes.kooper.quarryPets.database.listeners;
 import codes.kooper.koopKore.utils.Tasks;
 import codes.kooper.quarryPets.QuarryPets;
 import codes.kooper.quarryPets.database.events.EggStorageLoadEvent;
+import codes.kooper.quarryPets.database.events.EggStorageUnloadEvent;
 import codes.kooper.quarryPets.database.models.EggStorage;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -34,6 +35,7 @@ public class EggStorageLoadListener implements Listener {
 
         QuarryPets.getInstance().getEggStorageCache().get(uuid).ifPresent(storage -> {
             Tasks.runAsync(() -> QuarryPets.getInstance().getEggService().saveEggStorage(storage));
+            new EggStorageUnloadEvent(storage).callEvent();
             QuarryPets.getInstance().getEggStorageCache().invalidate(uuid);
         });
     }
