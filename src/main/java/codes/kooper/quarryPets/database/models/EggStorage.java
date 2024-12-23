@@ -3,9 +3,7 @@ package codes.kooper.quarryPets.database.models;
 import codes.kooper.koopKore.database.models.BaseEntity;
 import lombok.*;
 
-import java.util.HashSet;
-import java.util.Set;
-import java.util.UUID;
+import java.util.*;
 
 @Getter
 @Setter
@@ -13,20 +11,22 @@ import java.util.UUID;
 @ToString
 public class EggStorage extends BaseEntity {
     private UUID owner;
-    private Set<Egg> selectedEggs;
-    private Set<Egg> eggsStorage;
+    private List<Egg> selectedEggs;
+    private List<Egg> eggsStorage;
     private int maxSelected;
+    private int maxStorage;
 
     public EggStorage() {
-        eggsStorage = new HashSet<>();
-        selectedEggs = new HashSet<>();
+        eggsStorage = new ArrayList<>();
+        selectedEggs = new ArrayList<>();
     }
 
     public EggStorage(UUID owner) {
         this.owner = owner;
         maxSelected = 1;
-        eggsStorage = new HashSet<>();
-        selectedEggs = new HashSet<>();
+        eggsStorage = new ArrayList<>();
+        selectedEggs = new ArrayList<>();
+        maxStorage = 50;
     }
 
     @Override
@@ -37,6 +37,10 @@ public class EggStorage extends BaseEntity {
     @Override
     public void setId(UUID uuid) {
         this.owner = uuid;
+    }
+
+    public int getTotalCount() {
+        return eggsStorage.size() + selectedEggs.size();
     }
 
     public void addEggToStorage(Egg egg) {

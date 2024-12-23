@@ -19,12 +19,14 @@ public class PetStorage extends BaseEntity {
     private Set<Pet> selectedPets;
     private Set<Pet> petsStorage;
     private int maxSelected;
+    private int maxStorage;
 
     public PetStorage(UUID uuid) {
         this.owner = uuid;
         selectedPets = new HashSet<>();
         petsStorage = new HashSet<>();
         maxSelected = 1;
+        maxStorage = 100;
     }
 
     public PetStorage() {

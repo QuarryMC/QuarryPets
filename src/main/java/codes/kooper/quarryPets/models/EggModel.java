@@ -1,6 +1,7 @@
 package codes.kooper.quarryPets.models;
 
 import codes.kooper.koopKore.item.ItemBuilder;
+import codes.kooper.shaded.nbtapi.NBT;
 import lombok.Data;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
@@ -43,15 +44,19 @@ public class EggModel {
         return (entry != null) ? entry.getValue() : null;
     }
 
-    public ItemStack getEgg() {
-        return new ItemBuilder(Material.PLAYER_HEAD)
+    public ItemStack getPhysicalEgg() {
+        ItemStack item = new ItemBuilder(Material.PLAYER_HEAD)
             .setName(textUtils.colorize(color1 + "<bold>" + textUtils.capitalize(key).toUpperCase() + " EGG"))
             .setLore(List.of(
                 color2 + "Mine <white>" + numberUtils.commaFormat(blocks) + color2 + " blocks to hatch!",
-                "<gray><italic>(( View all hatchable pets with /petindex ))"
+                "<gray><italic>(( Click to deposit to your vault ))"
             ))
             .hideFlags(true)
             .setTexture(texture)
             .build();
+        NBT.modify(item, (nbt) -> {
+            nbt.setString("egg", key);
+        });
+        return item;
     }
 }

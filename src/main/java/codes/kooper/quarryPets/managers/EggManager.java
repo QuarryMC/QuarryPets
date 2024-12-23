@@ -2,8 +2,10 @@ package codes.kooper.quarryPets.managers;
 
 import codes.kooper.quarryPets.QuarryPets;
 import codes.kooper.quarryPets.models.EggModel;
+import codes.kooper.shaded.nbtapi.NBT;
 import lombok.Getter;
 import org.bukkit.configuration.ConfigurationSection;
+import org.bukkit.inventory.ItemStack;
 
 import java.util.*;
 
@@ -52,6 +54,13 @@ public class EggManager {
                     texture
             ));
         }
+    }
+
+    public EggModel getEggModel(ItemStack item) {
+        if (item == null || item.isEmpty()) return null;
+        return NBT.get(item, (nbt) -> {
+            return eggs.get(nbt.getString("egg"));
+        });
     }
 
     public EggModel getEgg(String egg) {

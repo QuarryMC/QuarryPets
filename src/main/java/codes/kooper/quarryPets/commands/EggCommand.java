@@ -27,10 +27,10 @@ public class EggCommand {
         new EggIndexGui(player);
     }
 
-    @Execute
+    @Execute(name = "give")
     @Permission("eggs.admin")
     public void giveEgg(@Arg Player target, @Arg EggModel eggModel, @OptionalArg Optional<Integer> amount) {
-        ItemStack eggItem = eggModel.getEgg();
+        ItemStack eggItem = eggModel.getPhysicalEgg();
         eggItem.setAmount(amount.orElse(1));
         target.getInventory().addItem(eggItem);
     }
