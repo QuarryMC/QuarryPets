@@ -29,7 +29,12 @@ public class Egg {
         blocksLeft = eggModel.getBlocks();
     }
 
+    public int getBlocksLeft() {
+        return Math.max(blocksLeft, 0);
+    }
+
     public void progressEgg(int amount) {
+        if (blocksLeft < 0) return;
         blocksLeft -= amount;
     }
 
