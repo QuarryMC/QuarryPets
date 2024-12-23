@@ -53,111 +53,138 @@ pets:
       color1: "#6B4226"
       color2: "#A0522D"
       chance: 0.5
+      model: "ladybugicon"
     snail:
       color1: "#4F4F2F"
       color2: "#808060"
       chance: 0.3
+      model: "snailicon"
     hedgehog:
       color1: "#4A2C2A"
       color2: "#8B4513"
       chance: 0.15
+      model: "hedgehogicon"
     white_rabbit:
       color1: "#DCDCDC"
       color2: "#F5F5F5"
       chance: 0.04
+      model: "rabbit2icon"
     brown_rabbit:
       color1: "#8B4513"
       color2: "#CD853F"
       chance: 0.01
+      model: "rabbiticon"
   iron:
     opossum:
       color1: "#696969"
       color2: "#A9A9A9"
       chance: 0.5
+      model: "opossumicon"
     seal:
       color1: "#556B2F"
       color2: "#6B8E23"
       chance: 0.3
+      model: "seal_harboricon"
     badger:
       color1: "#333333"
       color2: "#BEBEBE"
       chance: 0.15
+      model: "badgericon"
     beaver:
       color1: "#8B4513"
       color2: "#DEB887"
       chance: 0.045
+      model: "beavericon"
     turtle:
       color1: "#2E8B57"
       color2: "#66CDAA"
       chance: 0.004
+      model: "turtle_baseicon"
     crocodile:
       color1: "#556B2F"
       color2: "#6B8E23"
       chance: 0.001
+      model: "crocodileicon"
   gold:
     deer:
       color1: "#8B4513"
       color2: "#F4A460"
       chance: 0.5
+      model: "female_deericon"
     gazelle:
       color1: "#D2691E"
       color2: "#FF8C00"
       chance: 0.3
+      model: "gazelleicon"
     red_panda:
       color1: "#8B0000"
       color2: "#FF4500"
       chance: 0.15
+      model: "red_pandaicon"
     bison:
       color1: "#5E2605"
       color2: "#A0522D"
       chance: 0.04
+      model: "bisonicon"
     lion:
       color1: "#FFD700"
       color2: "#FFE135"
       chance: 0.01
+      model: "lionicon"
   diamond:
     arctic_fox:
       color1: "#B0C4DE"
       color2: "#DCDCDC"
       chance: 0.5
+      model: "fox_articicon"
     narwhal:
       color1: "#4682B4"
       color2: "#87CEFA"
       chance: 0.3
+      model: "narwhalicon"
     pegasus:
       color1: "#5F9EA0"
       color2: "#AFEEEE"
       chance: 0.15
+      model: "pegasusicon"
     griffin:
       color1: "#778899"
       color2: "#D3D3D3"
       chance: 0.04
+      model: "griffinicon"
     unicorn:
       color1: "#8A2BE2"
       color2: "#DA70D6"
       chance: 0.01
+      model: "unicornicon"
   dragon:
     killer_whale:
       color1: "#000000"
       color2: "#1E90FF"
       chance: 0.5
+      model: "whale_killericon"
     hippogriff:
       color1: "#8B4513"
       color2: "#CD853F"
       chance: 0.3
+      model: "hippogrifficon"
     hippocampus:
       color1: "#2E8B57"
       color2: "#66CDAA"
       chance: 0.15
+      model: "hippocampusicon"
     silver_dragon:
       color1: "#C0C0C0"
       color2: "#E5E5E5"
       chance: 0.04
+      model: "dragon_silvericon"
     red_dragon:
       color1: "#8B0000"
       color2: "#FF4500"
       chance: 0.01
+      model: "dragon_redicon"
     black_dragon:
       color1: "#000000"
       color2: "#696969"
       chance: 0.01
+      model: "dragon_blackicon"

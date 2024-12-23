@@ -29,6 +29,6 @@ public class Egg {
     }
 
     public EggModel getModel() {
-        return QuarryPets.getInstance().getPetManager().getEgg(egg);
+        return QuarryPets.getInstance().getEggManager().getEgg(egg);
     }
 }
