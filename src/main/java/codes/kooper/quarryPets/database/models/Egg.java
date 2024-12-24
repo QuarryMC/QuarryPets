@@ -7,6 +7,7 @@ import codes.kooper.shaded.nbtapi.NBT;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
+import org.bson.codecs.pojo.annotations.BsonIgnore;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 
@@ -29,23 +30,29 @@ public class Egg {
         blocksLeft = eggModel.getBlocks();
     }
 
+    @BsonIgnore
     public int getBlocksLeft() {
         return Math.max(blocksLeft, 0);
     }
 
-    public void progressEgg(int amount) {
-        if (blocksLeft < 0) return;
+    @BsonIgnore
+    public boolean progressEgg(int amount) {
+        if (blocksLeft < 0) return false;
         blocksLeft -= amount;
+        return blocksLeft == 0;
     }
 
+    @BsonIgnore
     public boolean canHatch() {
         return blocksLeft <= 0;
     }
 
+    @BsonIgnore
     public EggModel getModel() {
         return QuarryPets.getInstance().getEggManager().getEgg(egg);
     }
 
+    @BsonIgnore
     public ItemStack getPhysicalEgg() {
         EggModel eggModel = getModel();
         ItemStack item = new ItemBuilder(Material.PLAYER_HEAD)

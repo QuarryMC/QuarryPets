@@ -5,6 +5,7 @@ import codes.kooper.quarryPets.database.models.Pet;
 import codes.kooper.quarryPets.models.EggModel;
 import codes.kooper.quarryPets.models.PetModel;
 import codes.kooper.shaded.gui.builder.item.ItemBuilder;
+import com.github.retrooper.packetevents.util.Vector3f;
 import dev.lone.itemsadder.api.CustomStack;
 import lombok.Getter;
 import net.kyori.adventure.text.Component;
@@ -49,7 +50,10 @@ public class PetManager {
                 String color2 = petSection.getString("color2");
                 double chance = petSection.getDouble("chance");
                 String model = petSection.getString("model");
-                models.put(pet, new PetModel(pet, eggModel, color1, color2, chance, model));
+                float offsetX = (float) petSection.getDouble("egg-offset.x");
+                float offsetY = (float) petSection.getDouble("egg-offset.y");
+                float offsetZ = (float) petSection.getDouble("egg-offset.z");
+                models.put(pet, new PetModel(pet, eggModel, color1, color2, chance, model, new Vector3f(offsetX, offsetY, offsetZ)));
             }
             pets.put(rarity, models);
         }

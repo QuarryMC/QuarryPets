@@ -1,5 +1,7 @@
 package codes.kooper.quarryPets.commands;
 
+import codes.kooper.quarryPets.QuarryPets;
+import codes.kooper.quarryPets.database.models.Egg;
 import codes.kooper.quarryPets.guis.EggGui;
 import codes.kooper.quarryPets.guis.EggIndexGui;
 import codes.kooper.quarryPets.models.EggModel;
@@ -33,5 +35,12 @@ public class EggCommand {
         ItemStack eggItem = eggModel.getPhysicalEgg();
         eggItem.setAmount(amount.orElse(1));
         target.getInventory().addItem(eggItem);
+    }
+
+    @Execute(name = "open")
+    @Permission("eggs.open")
+    public void openEgg(@Arg Player target, @Arg EggModel eggModel) {
+        Egg egg = new Egg(eggModel);
+        QuarryPets.getInstance().getEggManager().hatchEgg(target, egg);
     }
 }

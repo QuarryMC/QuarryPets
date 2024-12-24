@@ -19,6 +19,7 @@ import codes.kooper.quarryPets.models.EggModel;
 import codes.kooper.shaded.litecommands.LiteCommands;
 import codes.kooper.shaded.litecommands.bukkit.LiteBukkitFactory;
 import com.github.retrooper.packetevents.PacketEvents;
+import io.github.retrooper.packetevents.factory.spigot.SpigotPacketEventsBuilder;
 import lombok.Getter;
 import me.tofaa.entitylib.APIConfig;
 import me.tofaa.entitylib.EntityLib;
@@ -41,9 +42,17 @@ public final class QuarryPets extends JavaPlugin {
     private DataSyncTask<UUID, PetStorage> petSyncTask;
 
     @Override
+    public void onLoad() {
+        PacketEvents.setAPI(SpigotPacketEventsBuilder.build(this));
+        PacketEvents.getAPI().load();
+    }
+
+    @Override
     public void onEnable() {
         saveDefaultConfig();
 
+        // PacketEvents
+        PacketEvents.getAPI().init();
         // EntityLib
         SpigotEntityLibPlatform platform = new SpigotEntityLibPlatform(this);
         APIConfig settings = new APIConfig(PacketEvents.getAPI())
@@ -80,6 +89,8 @@ public final class QuarryPets extends JavaPlugin {
     public void onDisable() {
         if (eggSyncTask != null) eggSyncTask.stop();
         if (petSyncTask != null) petSyncTask.stop();
+
+        PacketEvents.getAPI().terminate();
 
         // Shutdown LiteCommands
         if (this.liteCommands != null) {

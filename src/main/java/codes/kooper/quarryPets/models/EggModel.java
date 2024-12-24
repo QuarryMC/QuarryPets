@@ -17,6 +17,7 @@ import static codes.kooper.koopKore.KoopKore.textUtils;
 @Data
 public class EggModel {
     private final String key;
+    private final int index;
     private final double fortuneBoostMin;
     private final double fortuneBoostMax;
     private final double sellBoostMin;
@@ -25,8 +26,9 @@ public class EggModel {
     private final NavigableMap<Double, String> petChances;
     private final String color1, color2, texture;
 
-    public EggModel(String key, int blocks, double fortuneBoostMin, double fortuneBoostMax, double sellBoostMin, double sellBoostMax, NavigableMap<Double, String> petChances, String color1, String color2, String texture) {
+    public EggModel(String key, int index, int blocks, double fortuneBoostMin, double fortuneBoostMax, double sellBoostMin, double sellBoostMax, NavigableMap<Double, String> petChances, String color1, String color2, String texture) {
         this.key = key;
+        this.index = index;
         this.blocks = blocks;
         this.fortuneBoostMin = fortuneBoostMin;
         this.fortuneBoostMax = fortuneBoostMax;
@@ -39,9 +41,22 @@ public class EggModel {
     }
 
     public String getRandomPet() {
-        double randomValue = ThreadLocalRandom.current().nextDouble();
-        Map.Entry<Double, String> entry = petChances.higherEntry(randomValue);
-        return (entry != null) ? entry.getValue() : null;
+        if (petChances == null || petChances.isEmpty()) {
+            throw new IllegalStateException("The petChances map is not initialized or is empty.");
+        }
+
+        // Generate a random value between 0.0 and the highest key
+        double randomValue = ThreadLocalRandom.current().nextDouble(0.0, petChances.lastKey());
+
+        // Get the entry corresponding to the random value
+        Map.Entry<Double, String> entry = petChances.ceilingEntry(randomValue);
+
+        // If no entry is found, fallback to the first entry in the map
+        if (entry == null) {
+            throw new IllegalStateException("No matching pet found for the generated random value.");
+        }
+
+        return entry.getValue();
     }
 
     public ItemStack getPhysicalEgg() {

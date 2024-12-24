@@ -50,140 +50,248 @@ eggs:
 pets:
   stone:
     lady_bug:
+      egg-offset:
+        x: -3
+        y: 3
+        z: 0
       color1: "<#A05266>"
       color2: "<#C1877D>"
       chance: 0.5
       model: "ladybugicon"
     snail:
+      egg-offset:
+        x: -3
+        y: 3
+        z: 0
       color1: "<#7F7F5F>"
       color2: "<#B0B090>"
       chance: 0.3
       model: "snailicon"
     hedgehog:
+      egg-offset:
+        x: -3
+        y: 3
+        z: 0
       color1: "<#7A5C58>"
       color2: "<#C08973>"
       chance: 0.15
       model: "hedgehogicon"
     white_rabbit:
+      egg-offset:
+        x: -3
+        y: 3
+        z: 0
       color1: "<#F0F0F0>"
       color2: "<#FFFFFF>"
       chance: 0.04
       model: "rabbit2icon"
     brown_rabbit:
+      egg-offset:
+        x: -3
+        y: 3
+        z: 0
       color1: "<#C37A60>"
       color2: "<#E6A87A>"
       chance: 0.01
       model: "rabbiticon"
   iron:
     opossum:
+      egg-offset:
+        x: -3
+        y: 3
+        z: 0
       color1: "<#A9A9A9>"
       color2: "<#CFCFCF>"
       chance: 0.5
       model: "opossumicon"
     seal:
+      egg-offset:
+        x: -3
+        y: 4
+        z: 0
       color1: "<#8CA863>"
       color2: "<#A4C479>"
       chance: 0.3
       model: "seal_harboricon"
     badger:
+      egg-offset:
+        x: -3
+        y: 3
+        z: 0
       color1: "<#666666>"
       color2: "<#D0D0D0>"
       chance: 0.15
       model: "badgericon"
     beaver:
+      egg-offset:
+        x: -3
+        y: 3.5
+        z: 0
       color1: "<#C08973>"
       color2: "<#EED6B5>"
       chance: 0.045
       model: "beavericon"
     turtle:
+      egg-offset:
+        x: -3
+        y: 3.5
+        z: 0
       color1: "<#5FBF8D>"
       color2: "<#8FF1BF>"
       chance: 0.004
       model: "turtle_baseicon"
     crocodile:
+      egg-offset:
+        x: -3
+        y: 3
+        z: 0
       color1: "<#8CA863>"
       color2: "<#A4C479>"
       chance: 0.001
       model: "crocodileicon"
   gold:
     deer:
+      egg-offset:
+        x: -3
+        y: 3.5
+        z: 0
       color1: "<#C08973>"
       color2: "<#F4C29E>"
       chance: 0.5
       model: "female_deericon"
     gazelle:
+      egg-offset:
+        x: -3
+        y: 3.5
+        z: 0
       color1: "<#E0A265>"
       color2: "<#FFB870>"
       chance: 0.3
       model: "gazelleicon"
     red_panda:
+      egg-offset:
+        x: -3
+        y: 3.5
+        z: 0
       color1: "<#E07575>"
       color2: "<#FF9C6A>"
       chance: 0.15
       model: "red_pandaicon"
     bison:
+      egg-offset:
+        x: -3
+        y: 3.5
+        z: 0
       color1: "<#996746>"
       color2: "<#C08973>"
       chance: 0.04
       model: "bisonicon"
     lion:
+      egg-offset:
+        x: -3
+        y: 3.5
+        z: 0
       color1: "<#FFE680>"
       color2: "<#FFF7A0>"
       chance: 0.01
       model: "lionicon"
   diamond:
     arctic_fox:
+      egg-offset:
+        x: -3
+        y: 3.5
+        z: 0
       color1: "<#DCE4F5>"
       color2: "<#F5F5F5>"
       chance: 0.5
-      model: "fox_articicon"
+      model: "fox_arcticicon"
     narwhal:
+      egg-offset:
+        x: -3
+        y: 3.5
+        z: 0
       color1: "<#85A3D0>"
       color2: "<#B2D8FF>"
       chance: 0.3
       model: "narwhalicon"
     pegasus:
+      egg-offset:
+        x: -3
+        y: 3.5
+        z: 0
       color1: "<#8EC4BA>"
       color2: "<#CFF2E7>"
       chance: 0.15
       model: "pegasusicon"
     griffin:
+      egg-offset:
+        x: -3
+        y: 3.5
+        z: 0
       color1: "<#A3B1C4>"
       color2: "<#DDE0E5>"
       chance: 0.04
       model: "griffinicon"
     unicorn:
+      egg-offset:
+        x: -3
+        y: 3.5
+        z: 0
       color1: "<#BC88D9>"
       color2: "<#E5A8EC>"
       chance: 0.01
       model: "unicornicon"
   dragon:
     killer_whale:
+      egg-offset:
+        x: -2
+        y: 3.5
+        z: 0
       color1: "<#85C7FF>"
       color2: "<#B2E8FF>"
       chance: 0.5
       model: "whale_killericon"
     hippogriff:
+      egg-offset:
+        x: -2
+        y: 3.5
+        z: 0
       color1: "<#C08973>"
       color2: "<#E7BFA8>"
       chance: 0.3
       model: "hippogrifficon"
     hippocampus:
+      egg-offset:
+        x: -3
+        y: 3.5
+        z: 0
       color1: "<#5FBF8D>"
       color2: "<#8FF1BF>"
       chance: 0.15
       model: "hippocampusicon"
     silver_dragon:
+      egg-offset:
+        x: -3
+        y: 3.5
+        z: 0
       color1: "<#E5E5E5>"
       color2: "<#F2F2F2>"
       chance: 0.04
       model: "dragon_silvericon"
     red_dragon:
+      egg-offset:
+        x: -3
+        y: 3.5
+        z: 0
       color1: "<#E07575>"
       color2: "<#FF9C6A>"
       chance: 0.01
       model: "dragon_redicon"
     black_dragon:
+      egg-offset:
+        x: -3
+        y: 3.5
+        z: 0
       color1: "<#969696>"
       color2: "<#D3D3D3>"
       chance: 0.01

@@ -93,6 +93,7 @@ public class EggGui {
                 } else {
                     gui.setItem(slot, ItemBuilder.from(cancelIcon).name(textUtils.colorize("<red><bold>No Egg Selected")).asGuiItem());
                 }
+                index++;
                 continue;
             }
             final EggModel eggModel = egg.getModel();
@@ -116,7 +117,9 @@ public class EggGui {
                         player.playSound(player.getLocation(), Sound.ENTITY_VILLAGER_NO, 5, 1.2f);
                         return;
                     }
-                    System.out.println("HATCH");
+                    QuarryPets.getInstance().getEggManager().hatchEgg(player, egg);
+                    eggStorage.removeEggFromSelected(egg);
+                    player.closeInventory();
                 }
             });
             gui.setItem(slot, eggItem);
@@ -124,7 +127,7 @@ public class EggGui {
         }
 
         // Add eggs
-        for (Egg egg : eggStorage.getEggsStorage().stream().sorted(Comparator.comparing(Egg::getEgg)).toList()) {
+        for (Egg egg : eggStorage.getEggsStorage().stream().sorted(Comparator.comparing((egg) -> egg.getModel().getIndex())).toList()) {
             final EggModel eggModel = egg.getModel();
             GuiItem eggItem = ItemBuilder.from(eggModel.getPhysicalEgg())
                     .lore(List.of(
@@ -137,7 +140,6 @@ public class EggGui {
             eggItem.setAction((action) -> {
                 if (action.isRightClick()) {
                     eggStorage.removeEggFromStorage(egg);
-                    System.out.println(egg.getPhysicalEgg());
                     player.getInventory().addItem(egg.getPhysicalEgg());
                     player.playSound(player.getLocation(), Sound.ENTITY_ITEM_PICKUP, 5, 1.3f);
                 } else {
