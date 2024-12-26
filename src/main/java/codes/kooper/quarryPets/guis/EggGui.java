@@ -117,6 +117,11 @@ public class EggGui {
                         player.playSound(player.getLocation(), Sound.ENTITY_VILLAGER_NO, 5, 1.2f);
                         return;
                     }
+                    if (player.getInventory().firstEmpty() == -1) {
+                        player.sendMessage(textUtils.error("Your inventory is full!"));
+                        player.playSound(player.getLocation(), Sound.ENTITY_VILLAGER_NO, 5, 1.2f);
+                        return;
+                    }
                     QuarryPets.getInstance().getEggManager().hatchEgg(player, egg);
                     eggStorage.removeEggFromSelected(egg);
                     player.closeInventory();

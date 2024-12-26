@@ -3,6 +3,7 @@ package codes.kooper.quarryPets.models;
 import codes.kooper.koopKore.item.ItemBuilder;
 import codes.kooper.shaded.nbtapi.NBT;
 import lombok.Data;
+import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 
@@ -22,11 +23,15 @@ public class EggModel {
     private final double fortuneBoostMax;
     private final double sellBoostMin;
     private final double sellBoostMax;
+    private final int luckyBlockNukerMin;
+    private final int luckyBlockNukerMax;
     private final int blocks;
     private final NavigableMap<Double, String> petChances;
     private final String color1, color2, texture;
+    private final Location playerLocation;
+    private final Location eggLocation;
 
-    public EggModel(String key, int index, int blocks, double fortuneBoostMin, double fortuneBoostMax, double sellBoostMin, double sellBoostMax, NavigableMap<Double, String> petChances, String color1, String color2, String texture) {
+    public EggModel(String key, int index, int blocks, double fortuneBoostMin, double fortuneBoostMax, double sellBoostMin, double sellBoostMax, int luckyBlockNukerMin, int luckyBlockNukerMax, NavigableMap<Double, String> petChances, String color1, String color2, String texture, Location playerLocation, Location eggLocation) {
         this.key = key;
         this.index = index;
         this.blocks = blocks;
@@ -34,10 +39,14 @@ public class EggModel {
         this.fortuneBoostMax = fortuneBoostMax;
         this.sellBoostMin = sellBoostMin;
         this.sellBoostMax = sellBoostMax;
+        this.luckyBlockNukerMin = luckyBlockNukerMin;
+        this.luckyBlockNukerMax = luckyBlockNukerMax;
         this.petChances = petChances;
         this.color1 = color1;
         this.color2 = color2;
         this.texture = texture;
+        this.playerLocation = playerLocation;
+        this.eggLocation = eggLocation;
     }
 
     public String getRandomPet() {
@@ -70,7 +79,7 @@ public class EggModel {
             .setTexture(texture)
             .build();
         NBT.modify(item, (nbt) -> {
-            nbt.setString("egg", key);
+            nbt.setString("egg-item", key);
         });
         return item;
     }

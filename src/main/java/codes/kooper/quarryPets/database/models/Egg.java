@@ -30,7 +30,6 @@ public class Egg {
         blocksLeft = eggModel.getBlocks();
     }
 
-    @BsonIgnore
     public int getBlocksLeft() {
         return Math.max(blocksLeft, 0);
     }

@@ -5,10 +5,9 @@ import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
+import org.bson.codecs.pojo.annotations.BsonIgnore;
 
-import java.util.HashSet;
-import java.util.Set;
-import java.util.UUID;
+import java.util.*;
 
 @Getter
 @Setter
@@ -16,22 +15,22 @@ import java.util.UUID;
 @ToString
 public class PetStorage extends BaseEntity {
     private UUID owner;
-    private Set<Pet> selectedPets;
-    private Set<Pet> petsStorage;
+    private List<Pet> selectedPets;
+    private List<Pet> petsStorage;
     private int maxSelected;
     private int maxStorage;
 
     public PetStorage(UUID uuid) {
         this.owner = uuid;
-        selectedPets = new HashSet<>();
-        petsStorage = new HashSet<>();
+        selectedPets = new ArrayList<>();
+        petsStorage = new ArrayList<>();
         maxSelected = 1;
         maxStorage = 100;
     }
 
     public PetStorage() {
-        selectedPets = new HashSet<>();
-        petsStorage = new HashSet<>();
+        selectedPets = new ArrayList<>();
+        petsStorage = new ArrayList<>();
     }
 
     @Override
@@ -44,18 +43,27 @@ public class PetStorage extends BaseEntity {
         owner = uuid;
     }
 
+    @BsonIgnore
+    public int getTotalCount() {
+        return petsStorage.size() + selectedPets.size();
+    }
+
+    @BsonIgnore
     public void addPetToStorage(Pet pet) {
         petsStorage.add(pet);
     }
 
+    @BsonIgnore
     public void addPetToSelected(Pet pet) {
         selectedPets.add(pet);
     }
 
+    @BsonIgnore
     public void removePetFromStorage(Pet pet) {
         petsStorage.remove(pet);
     }
 
+    @BsonIgnore
     public void removePetFromSelected(Pet pet) {
         selectedPets.remove(pet);
     }

@@ -1,5 +1,16 @@
 eggs:
   stone:
+    cutscene:
+      player-location:
+        x: 57.5
+        y: -28
+        z: 54.5
+        yaw: 0
+      egg-location:
+        x: 57.5
+        y: -27.5
+        z: 65.5
+        yaw: 180
     blocks: 10000
     fortune-boost-min: 1.05
     fortune-boost-max: 1.1
@@ -9,6 +20,17 @@ eggs:
     color2: "<#A9A9A9>"
     texture: "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvZDBmZDViMmMzM2ViNjJmMDRhODhjNjY5ZjJmNmRhMjVlMjRiYzk0YmE4N2I5N2IwZjhkMjc5M2JmYjdmM2Y1In19fQ=="
   iron:
+    cutscene:
+      player-location:
+        x: 57.5
+        y: -28
+        z: 54.5
+        yaw: 0
+      egg-location:
+        x: 57.5
+        y: -27.5
+        z: 65.5
+        yaw: 180
     blocks: 40000
     fortune-boost-min: 1.1
     fortune-boost-max: 1.5
@@ -18,6 +40,17 @@ eggs:
     color2: "<#7F858C>"
     texture: "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvNTM5YTFjOTBhMzY3YzQ0ZmFhNDlkMGUyNzM0ODc3NzBmMmUzZjgzZGNiMWViYTZkNzU4YjQ3MzBhZTVmOTY4OCJ9fX0="
   gold:
+    cutscene:
+      player-location:
+        x: 24.5
+        y: -28
+        z: 67.5
+        yaw: 180
+      egg-location:
+        x: 24.5
+        y: -27.5
+        z: 58.5
+        yaw: 0
     blocks: 90000
     fortune-boost-min: 1.5
     fortune-boost-max: 2.5
@@ -27,6 +60,17 @@ eggs:
     color2: "<#FFD70>"
     texture: "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvMTUxNTk5ZjY2ZTgzZGE1NTVjZjliOGI3ZTVhMzc5ZDBkZWFiMjFjMmVlZTkwOWQxODM3MzIzZGIwODkzYmYzOCJ9fX0="
   diamond:
+    cutscene:
+      player-location:
+        x: 24.5
+        y: -28
+        z: 67.5
+        yaw: 180
+      egg-location:
+        x: 24.5
+        y: -27.5
+        z: 58.5
+        yaw: 0
     blocks: 150000
     fortune-boost-min: 2.5
     fortune-boost-max: 3.5
@@ -36,6 +80,17 @@ eggs:
     color2: "<#85E3FF>"
     texture: "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvNzYxMDU1ZDcyZTBhYThhMTYyYjQwNDczZTMwNzQ4ZjczMzExNjcwMGIwNGJlNmFjOWExZTgxNjFjYTc3YWYwYyJ9fX0="
   dragon:
+    cutscene:
+      player-location:
+        x: -9.5
+        y: -24
+        z: 67.5
+        yaw: 180
+      egg-location:
+        x: -10.5
+        y: -23.5
+        z: 56.5
+        yaw: 0
     blocks: 300000
     fortune-boost-min: 3.5
     fortune-boost-max: 5.0
@@ -51,8 +106,8 @@ pets:
   stone:
     lady_bug:
       egg-offset:
-        x: -3
-        y: 3
+        x: -2.25
+        y: 3.5
         z: 0
       color1: "<#A05266>"
       color2: "<#C1877D>"
@@ -60,8 +115,8 @@ pets:
       model: "ladybugicon"
     snail:
       egg-offset:
-        x: -3
-        y: 3
+        x: -2.25
+        y: 3.5
         z: 0
       color1: "<#7F7F5F>"
       color2: "<#B0B090>"
@@ -69,7 +124,7 @@ pets:
       model: "snailicon"
     hedgehog:
       egg-offset:
-        x: -3
+        x: -2.25
         y: 3
         z: 0
       color1: "<#7A5C58>"
@@ -78,7 +133,7 @@ pets:
       model: "hedgehogicon"
     white_rabbit:
       egg-offset:
-        x: -3
+        x: -2.25
         y: 3
         z: 0
       color1: "<#F0F0F0>"
@@ -87,7 +142,7 @@ pets:
       model: "rabbit2icon"
     brown_rabbit:
       egg-offset:
-        x: -3
+        x: -2.25
         y: 3
         z: 0
       color1: "<#C37A60>"
@@ -97,8 +152,8 @@ pets:
   iron:
     opossum:
       egg-offset:
-        x: -3
-        y: 3
+        x: -2.25
+        y: 3.5
         z: 0
       color1: "<#A9A9A9>"
       color2: "<#CFCFCF>"
@@ -106,8 +161,8 @@ pets:
       model: "opossumicon"
     seal:
       egg-offset:
-        x: -3
-        y: 4
+        x: -2.25
+        y: 3.5
         z: 0
       color1: "<#8CA863>"
       color2: "<#A4C479>"
@@ -115,7 +170,7 @@ pets:
       model: "seal_harboricon"
     badger:
       egg-offset:
-        x: -3
+        x: -2.25
         y: 3
         z: 0
       color1: "<#666666>"
@@ -124,7 +179,7 @@ pets:
       model: "badgericon"
     beaver:
       egg-offset:
-        x: -3
+        x: -2.25
         y: 3.5
         z: 0
       color1: "<#C08973>"
@@ -133,7 +188,7 @@ pets:
       model: "beavericon"
     turtle:
       egg-offset:
-        x: -3
+        x: -2.25
         y: 3.5
         z: 0
       color1: "<#5FBF8D>"
@@ -142,7 +197,7 @@ pets:
       model: "turtle_baseicon"
     crocodile:
       egg-offset:
-        x: -3
+        x: -2.25
         y: 3
         z: 0
       color1: "<#8CA863>"
@@ -152,8 +207,8 @@ pets:
   gold:
     deer:
       egg-offset:
-        x: -3
-        y: 3.5
+        x: -2.25
+        y: 3
         z: 0
       color1: "<#C08973>"
       color2: "<#F4C29E>"
@@ -161,8 +216,8 @@ pets:
       model: "female_deericon"
     gazelle:
       egg-offset:
-        x: -3
-        y: 3.5
+        x: -2.25
+        y: 3
         z: 0
       color1: "<#E0A265>"
       color2: "<#FFB870>"
@@ -170,8 +225,8 @@ pets:
       model: "gazelleicon"
     red_panda:
       egg-offset:
-        x: -3
-        y: 3.5
+        x: -2.25
+        y: 3
         z: 0
       color1: "<#E07575>"
       color2: "<#FF9C6A>"
@@ -179,8 +234,8 @@ pets:
       model: "red_pandaicon"
     bison:
       egg-offset:
-        x: -3
-        y: 3.5
+        x: -2.25
+        y: 3
         z: 0
       color1: "<#996746>"
       color2: "<#C08973>"
@@ -188,8 +243,8 @@ pets:
       model: "bisonicon"
     lion:
       egg-offset:
-        x: -3
-        y: 3.5
+        x: -2.25
+        y: 3
         z: 0
       color1: "<#FFE680>"
       color2: "<#FFF7A0>"
@@ -198,8 +253,8 @@ pets:
   diamond:
     arctic_fox:
       egg-offset:
-        x: -3
-        y: 3.5
+        x: -2.25
+        y: 3
         z: 0
       color1: "<#DCE4F5>"
       color2: "<#F5F5F5>"
@@ -207,7 +262,7 @@ pets:
       model: "fox_arcticicon"
     narwhal:
       egg-offset:
-        x: -3
+        x: -2.25
         y: 3.5
         z: 0
       color1: "<#85A3D0>"
@@ -216,8 +271,8 @@ pets:
       model: "narwhalicon"
     pegasus:
       egg-offset:
-        x: -3
-        y: 3.5
+        x: -2.25
+        y: 3
         z: 0
       color1: "<#8EC4BA>"
       color2: "<#CFF2E7>"
@@ -225,8 +280,8 @@ pets:
       model: "pegasusicon"
     griffin:
       egg-offset:
-        x: -3
-        y: 3.5
+        x: -2.25
+        y: 3
         z: 0
       color1: "<#A3B1C4>"
       color2: "<#DDE0E5>"
@@ -234,7 +289,7 @@ pets:
       model: "griffinicon"
     unicorn:
       egg-offset:
-        x: -3
+        x: -2.25
         y: 3.5
         z: 0
       color1: "<#BC88D9>"
@@ -244,7 +299,7 @@ pets:
   dragon:
     killer_whale:
       egg-offset:
-        x: -2
+        x: -2.25
         y: 3.5
         z: 0
       color1: "<#85C7FF>"
@@ -253,8 +308,8 @@ pets:
       model: "whale_killericon"
     hippogriff:
       egg-offset:
-        x: -2
-        y: 3.5
+        x: -2.25
+        y: 3
         z: 0
       color1: "<#C08973>"
       color2: "<#E7BFA8>"
@@ -262,7 +317,7 @@ pets:
       model: "hippogrifficon"
     hippocampus:
       egg-offset:
-        x: -3
+        x: -2.25
         y: 3.5
         z: 0
       color1: "<#5FBF8D>"
@@ -271,8 +326,8 @@ pets:
       model: "hippocampusicon"
     silver_dragon:
       egg-offset:
-        x: -3
-        y: 3.5
+        x: -2.25
+        y: 3
         z: 0
       color1: "<#E5E5E5>"
       color2: "<#F2F2F2>"
@@ -280,8 +335,8 @@ pets:
       model: "dragon_silvericon"
     red_dragon:
       egg-offset:
-        x: -3
-        y: 3.5
+        x: -2.25
+        y: 3
         z: 0
       color1: "<#E07575>"
       color2: "<#FF9C6A>"
@@ -289,8 +344,8 @@ pets:
       model: "dragon_redicon"
     black_dragon:
       egg-offset:
-        x: -3
-        y: 3.5
+        x: -2.25
+        y: 3
         z: 0
       color1: "<#969696>"
       color2: "<#D3D3D3>"

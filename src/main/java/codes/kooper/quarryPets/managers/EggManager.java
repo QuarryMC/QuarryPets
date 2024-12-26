@@ -6,17 +6,17 @@ import codes.kooper.quarryPets.database.models.Egg;
 import codes.kooper.quarryPets.database.models.EggStorage;
 import codes.kooper.quarryPets.models.EggModel;
 import codes.kooper.quarryPets.models.PetModel;
+import codes.kooper.shaded.entitylib.meta.display.AbstractDisplayMeta;
+import codes.kooper.shaded.entitylib.meta.display.ItemDisplayMeta;
+import codes.kooper.shaded.entitylib.meta.display.TextDisplayMeta;
+import codes.kooper.shaded.entitylib.wrapper.WrapperEntity;
+import codes.kooper.shaded.entitylib.wrapper.WrapperLivingEntity;
 import codes.kooper.shaded.nbtapi.NBT;
-import com.github.retrooper.packetevents.protocol.entity.type.EntityTypes;
-import com.github.retrooper.packetevents.util.Vector3f;
+import codes.kooper.shaded.packetevents.api.util.SpigotConversionUtil;
+import codes.kooper.shaded.packetevents.protocol.entity.type.EntityTypes;
+import codes.kooper.shaded.packetevents.util.Vector3f;
 import dev.lone.itemsadder.api.CustomStack;
-import io.github.retrooper.packetevents.util.SpigotConversionUtil;
 import lombok.Getter;
-import me.tofaa.entitylib.meta.display.AbstractDisplayMeta;
-import me.tofaa.entitylib.meta.display.ItemDisplayMeta;
-import me.tofaa.entitylib.meta.display.TextDisplayMeta;
-import me.tofaa.entitylib.wrapper.WrapperEntity;
-import me.tofaa.entitylib.wrapper.WrapperLivingEntity;
 import net.kyori.adventure.title.TitlePart;
 import org.bukkit.*;
 import org.bukkit.configuration.ConfigurationSection;
@@ -34,8 +34,6 @@ import static codes.kooper.koopKore.KoopKore.textUtils;
 public class EggManager {
     private final LinkedHashMap<String, EggModel> eggs;
     private final Set<UUID> eggOpening;
-    private final static Location eggLocation = new Location(Bukkit.getWorld("mine"), -8.5, -27.5, 65.5, 180, 0);
-    private final static Location playerLocation = new Location(Bukkit.getWorld("mine"), -8.5, -28, 58.5, 0, 0);
 
     public EggManager() {
         eggs = new LinkedHashMap<>();
@@ -55,6 +53,8 @@ public class EggManager {
             double fortuneBoostMax = section.getDouble("fortune-boost-max");
             double sellBoostMin = section.getDouble("sell-boost-min");
             double sellBoostMax = section.getDouble("sell-boost-max");
+            int luckyMin = section.getInt("lucky-block-nuker-min", 0);
+            int luckyMax = section.getInt("lucky-block-nuker-max", 0);
             String color1 = section.getString("color1");
             String color2 = section.getString("color2");
             String texture = section.getString("texture");
@@ -67,6 +67,25 @@ public class EggManager {
                 petChances.put(chance, pet);
             }
 
+            ConfigurationSection cutscene = section.getConfigurationSection("cutscene");
+            if (cutscene == null) return;
+            Location playerLocation = new Location(
+                    Bukkit.getWorld("mine"),
+                    cutscene.getDouble("player-location.x"),
+                    cutscene.getDouble("player-location.y"),
+                    cutscene.getDouble("player-location.z"),
+                    (float) cutscene.getDouble("player-location.yaw"),
+                    0
+            );
+            Location eggLocation = new Location(
+                    Bukkit.getWorld("mine"),
+                    cutscene.getDouble("egg-location.x"),
+                    cutscene.getDouble("egg-location.y"),
+                    cutscene.getDouble("egg-location.z"),
+                    (float) cutscene.getDouble("egg-location.yaw"),
+                    0
+            );
+
             eggs.put(key, new EggModel(
                     key,
                     index,
@@ -75,10 +94,14 @@ public class EggManager {
                     fortuneBoostMax,
                     sellBoostMin,
                     sellBoostMax,
+                    luckyMin,
+                    luckyMax,
                     petChances,
                     color1,
                     color2,
-                    texture
+                    texture,
+                    playerLocation,
+                    eggLocation
             ));
             index--;
         }
@@ -101,7 +124,7 @@ public class EggManager {
     public EggModel getEggModel(ItemStack item) {
         if (item == null || item.isEmpty()) return null;
         return NBT.get(item, (nbt) -> {
-            return eggs.get(nbt.getString("egg"));
+            return eggs.get(nbt.getString("egg-item"));
         });
     }
 
@@ -110,12 +133,12 @@ public class EggManager {
     }
 
     public void hatchEgg(Player player, Egg egg) {
-        player.playSound(player.getLocation(), Sound.BLOCK_END_GATEWAY_SPAWN, 5, 1.2f);
+        player.playSound(player.getLocation(), Sound.BLOCK_PORTAL_TRAVEL, 5, 2f);
         player.addPotionEffect(new PotionEffect(PotionEffectType.BLINDNESS, 35, 5, false, false, false));
         player.addPotionEffect(new PotionEffect(PotionEffectType.INVISIBILITY, Integer.MAX_VALUE, 1, false, false, false));
         eggOpening.add(player.getUniqueId());
         final Location previousLoc = player.getLocation();
-        player.teleport(playerLocation);
+        player.teleport(egg.getModel().getPlayerLocation());
         Tasks.runAsyncLater(() -> {
             EggModel eggModel = egg.getModel();
 
@@ -128,7 +151,7 @@ public class EggManager {
 
             // Add viewer and spawn the egg entity
             eggEntity.addViewerSilently(player.getUniqueId());
-            eggEntity.spawn(SpigotConversionUtil.fromBukkitLocation(eggLocation.clone().add(0, 4, 0)));
+            eggEntity.spawn(SpigotConversionUtil.fromBukkitLocation(egg.getModel().getEggLocation().clone().add(0, 4, 0)));
 
             new BukkitRunnable() {
                 int shakes = 0;
@@ -145,7 +168,7 @@ public class EggManager {
                         if (petModel.chance() < 0.1) {
                             WrapperEntity lightning = new WrapperEntity(EntityTypes.LIGHTNING_BOLT);
                             lightning.addViewerSilently(player.getUniqueId());
-                            lightning.spawn(SpigotConversionUtil.fromBukkitLocation(eggLocation));
+                            lightning.spawn(SpigotConversionUtil.fromBukkitLocation(egg.getModel().getEggLocation()));
                         }
 
                         WrapperEntity petTextDisplay = new WrapperEntity(EntityTypes.TEXT_DISPLAY);
@@ -154,9 +177,9 @@ public class EggManager {
                         textDisplayMeta.setBillboardConstraints(AbstractDisplayMeta.BillboardConstraints.VERTICAL);
                         textDisplayMeta.setScale(new Vector3f(3, 3, 3));
                         textDisplayMeta.setSeeThrough(true);
-                        textDisplayMeta.setText(textUtils.colorize(petModel.color1() + "<bold>" + textUtils.capitalize(petModel.name()).toUpperCase() + " PET<newline><reset>" + petModel.color2() + "Chance: <green>" + petModel.chance() + "%"));
+                        textDisplayMeta.setText(textUtils.colorize(petModel.color1() + "<bold>" + textUtils.capitalize(petModel.name()).toUpperCase() + " PET<newline><reset>" + petModel.color2() + "Chance: <green>" + (petModel.chance() * 100) + "%"));
                         petTextDisplay.addViewerSilently(player.getUniqueId());
-                        petTextDisplay.spawn(SpigotConversionUtil.fromBukkitLocation(eggLocation));
+                        petTextDisplay.spawn(SpigotConversionUtil.fromBukkitLocation(egg.getModel().getEggLocation()));
 
                         WrapperLivingEntity petDisplay = new WrapperLivingEntity(EntityTypes.ITEM_DISPLAY);
                         ItemStack petIcon;
@@ -175,7 +198,7 @@ public class EggManager {
                         itemDisplayMeta1.setScale(new Vector3f(4.5f, 4.5f, 4.5f));
                         petDisplay.addViewerSilently(player.getUniqueId());
                         petDisplay.addPassenger(petTextDisplay.getEntityId());
-                        Location petLoc = eggLocation.clone();
+                        Location petLoc = egg.getModel().getEggLocation().clone();
                         petLoc.setYaw(90);
                         petDisplay.spawn(SpigotConversionUtil.fromBukkitLocation(petLoc));
 
@@ -183,9 +206,10 @@ public class EggManager {
 
                         cancel();
                         Tasks.runSyncLater(() -> {
+                            player.getInventory().addItem(petModel.getPet().getPhysicalPet());
                             player.addPotionEffect(new PotionEffect(PotionEffectType.BLINDNESS, 35, 5, false, false, false));
                             player.teleport(previousLoc);
-                            player.playSound(player.getLocation(), Sound.BLOCK_PORTAL_TRAVEL, 5, 1.3f);
+                            player.playSound(player.getLocation(), Sound.BLOCK_PORTAL_TRAVEL, 5, 2f);
                         }, 75);
                         Tasks.runSyncLater(() -> {
                             petDisplay.despawn();
@@ -206,7 +230,7 @@ public class EggManager {
 
                     eggEntity.rotateHead(randomYaw, randomPitch);
 
-                    player.spawnParticle(Particle.BLOCK, eggLocation, 10, 0.3, 0.3, 0.3, eggItem.getType().createBlockData());
+                    player.spawnParticle(Particle.BLOCK, egg.getModel().getEggLocation(), 10, 0.3, 0.3, 0.3, eggItem.getType().createBlockData());
 
                     shakes++;
                 }
