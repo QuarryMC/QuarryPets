@@ -1,5 +1,7 @@
 package codes.kooper.quarryPets.guis;
 
+import codes.kooper.koopKore.KoopKore;
+import codes.kooper.koopKore.database.models.User;
 import codes.kooper.quarryPets.QuarryPets;
 import codes.kooper.quarryPets.database.models.Egg;
 import codes.kooper.quarryPets.database.models.EggStorage;
@@ -18,10 +20,7 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.PotionMeta;
 import org.bukkit.potion.PotionType;
 
-import java.util.Comparator;
-import java.util.List;
-import java.util.Optional;
-import java.util.Set;
+import java.util.*;
 
 import static codes.kooper.koopKore.KoopKore.numberUtils;
 import static codes.kooper.koopKore.KoopKore.textUtils;
@@ -35,6 +34,11 @@ public class EggGui {
         Optional<EggStorage> eggStorageOptional = QuarryPets.getInstance().getEggStorageCache().get(player.getUniqueId());
         if (eggStorageOptional.isEmpty()) return;
         EggStorage eggStorage = eggStorageOptional.get();
+
+        // User
+        Optional<User> userOptional = KoopKore.getInstance().getUserAPI().getUser(player.getUniqueId());
+        if (userOptional.isEmpty()) return;
+        User user = userOptional.get();
 
         // Border
         gui.getFiller().fillBorder(ItemBuilder.from(Material.GRAY_STAINED_GLASS_PANE).name(Component.empty()).asGuiItem());
@@ -83,52 +87,94 @@ public class EggGui {
         // Selected eggs
         int[] slots = {2, 3, 4, 5, 6};
         int index = 0;
-        for (int slot :  slots) {
-            Egg egg;
+        List<Integer> unlockedSlots = new ArrayList<>();
+        List<Integer> miningLockedSlots = new ArrayList<>();
+        List<Integer> buyLockedSlots = new ArrayList<>();
+
+        for (int slot : slots) {
             try {
-                egg = eggStorage.getSelectedEggs().get(index);
+                eggStorage.getSelectedEggs().get(index);
+                unlockedSlots.add(slot);
             } catch (Exception e) {
+                // Handle the case where there is no egg selected for this slot
                 if (index + 1 > eggStorage.getMaxSelected()) {
-                    gui.setItem(slot, ItemBuilder.from(Material.IRON_BARS).name(textUtils.colorize("<red><bold>Egg Slot Locked")).lore(textUtils.colorize("<gray>Unlock in /buy")).asGuiItem());
+                    if (index == 3 || index == 4) { // Mining-unlocked slots (slot 4 and 5)
+                        miningLockedSlots.add(slot);
+                    } else { // /buy-unlocked slots (slot 1 and 2)
+                        buyLockedSlots.add(slot);
+                    }
                 } else {
+                    // Handle unselected eggs (No Egg Selected)
                     gui.setItem(slot, ItemBuilder.from(cancelIcon).name(textUtils.colorize("<red><bold>No Egg Selected")).asGuiItem());
                 }
-                index++;
-                continue;
             }
-            final EggModel eggModel = egg.getModel();
-            GuiItem eggItem = ItemBuilder.from(eggModel.getPhysicalEgg())
+            index++;
+        }
+
+        for (int slot : unlockedSlots) {
+            Egg egg = eggStorage.getSelectedEggs().get(unlockedSlots.indexOf(slot));
+
+            // Create the egg item with lore based on its status
+            GuiItem eggItem = ItemBuilder.from(egg.getModel().getPhysicalEgg())
                     .lore(List.of(
-                            textUtils.colorize(eggModel.getColor2() + "Mine <white>" + numberUtils.commaFormat(egg.getBlocksLeft()) + eggModel.getColor2() + " blocks to hatch!"),
+                            textUtils.colorize(egg.getModel().getColor2() + "Mine <white>" + numberUtils.commaFormat(egg.getBlocksLeft()) + egg.getModel().getColor2() + " blocks to hatch!"),
                             Component.empty(),
                             textUtils.colorize("<green><bold>LEFT-CLICK TO UNSELECT"),
                             textUtils.colorize("<rainbow><bold>RIGHT-CLICK TO HATCH")
                     ))
                     .asGuiItem();
+
+            // Set the actions for the item
             eggItem.setAction((action) -> {
                 if (action.isLeftClick()) {
+                    // Left-click: Unselect the egg and move it to storage
                     eggStorage.removeEggFromSelected(egg);
                     eggStorage.addEggToStorage(egg);
                     player.playSound(player.getLocation(), Sound.UI_BUTTON_CLICK, 5, 1);
-                    new EggGui(player);
-                } else {
+                    new EggGui(player); // Refresh the GUI after unselecting
+                } else if (action.isRightClick()) {
+                    // Right-click: Hatch the egg if ready
                     if (!egg.canHatch()) {
+                        // If egg is not ready to hatch, show an error
                         player.sendMessage(textUtils.error("This egg is not ready to hatch!"));
                         player.playSound(player.getLocation(), Sound.ENTITY_VILLAGER_NO, 5, 1.2f);
                         return;
                     }
+                    // If inventory is full, show an error
                     if (player.getInventory().firstEmpty() == -1) {
                         player.sendMessage(textUtils.error("Your inventory is full!"));
                         player.playSound(player.getLocation(), Sound.ENTITY_VILLAGER_NO, 5, 1.2f);
                         return;
                     }
+                    // Hatch the egg
                     QuarryPets.getInstance().getEggManager().hatchEgg(player, egg);
                     eggStorage.removeEggFromSelected(egg);
-                    player.closeInventory();
+                    player.closeInventory(); // Close the inventory after hatching
                 }
             });
-            gui.setItem(slot, eggItem);
-            index++;
+
+            // Set the egg item into the GUI at the correct slot
+            gui.setItem(slots[unlockedSlots.indexOf(slot)], eggItem);
+        }
+
+        int i = 0;
+        for (int slot : miningLockedSlots) {
+            int requiredMined = (i == 0) ? 150000 : 500000; // Adjust mining requirements based on slot
+            if (user.getMined() >= requiredMined) {
+                // Slot is unlocked by mining
+                gui.setItem(slot, ItemBuilder.from(Material.EGG).name(textUtils.colorize("<green><bold>Egg Slot Unlocked"))
+                        .lore(textUtils.colorize("<gray>Unlock by mining <white>" + numberUtils.commaFormat(requiredMined) + " <gray>blocks.")).asGuiItem());
+            } else {
+                // Slot is locked and requires more mining
+                gui.setItem(slot, ItemBuilder.from(Material.IRON_BARS).name(textUtils.colorize("<red><bold>Egg Slot Locked"))
+                        .lore(textUtils.colorize("<gray>Unlock by mining <white>" + numberUtils.commaFormat(requiredMined) + " <gray>blocks.")).asGuiItem());
+            }
+            i++;
+        }
+
+        for (int slot : buyLockedSlots) {
+            gui.setItem(slot, ItemBuilder.from(Material.IRON_BARS).name(textUtils.colorize("<red><bold>Egg Slot Locked"))
+                    .lore(textUtils.colorize("<gray>Unlock in /buy.")).asGuiItem());
         }
 
         // Add eggs
@@ -148,6 +194,11 @@ public class EggGui {
                     player.getInventory().addItem(egg.getPhysicalEgg());
                     player.playSound(player.getLocation(), Sound.ENTITY_ITEM_PICKUP, 5, 1.3f);
                 } else {
+                    if (eggStorage.getSelectedEggs().size() + 1 > eggStorage.getMaxSelected()) {
+                        player.playSound(player.getLocation(), Sound.ENTITY_VILLAGER_NO, 5, 1);
+                        player.sendMessage(textUtils.error("You have the maxed amount of eggs equipped."));
+                        return;
+                    }
                     eggStorage.removeEggFromStorage(egg);
                     eggStorage.addEggToSelected(egg);
                     player.playSound(player.getLocation(), Sound.UI_BUTTON_CLICK, 5, 1);

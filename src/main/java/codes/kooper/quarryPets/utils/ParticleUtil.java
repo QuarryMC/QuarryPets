@@ -11,7 +11,6 @@ public class ParticleUtil {
     public static void createRainbowSpiral(Player player) {
         new BukkitRunnable() {
             double t = 0;
-            final Location center = player.getLocation();
 
             @Override
             public void run() {
@@ -19,6 +18,7 @@ public class ParticleUtil {
                     this.cancel();
                     return;
                 }
+                final Location center = player.getLocation();
 
                 t += Math.PI / 16;
                 double radius = 1.5;

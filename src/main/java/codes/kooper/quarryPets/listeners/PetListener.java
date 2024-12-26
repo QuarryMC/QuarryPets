@@ -25,6 +25,7 @@ public class PetListener implements Listener {
         Tasks.runSyncLater(() -> QuarryPets.getInstance().getPetManager().equipPets(event.getPlayer()), 40L);
     }
 
+    @EventHandler
     public void onQuit(PlayerQuitEvent event) {
         QuarryPets.getInstance().getPetManager().getSpawnedPets().remove(event.getPlayer().getUniqueId());
     }
