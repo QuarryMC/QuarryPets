@@ -6,7 +6,6 @@ import codes.kooper.quarryPets.database.models.Pet;
 import codes.kooper.quarryPets.database.models.PetStorage;
 import codes.kooper.quarryPets.models.EggModel;
 import codes.kooper.quarryPets.models.PetModel;
-import codes.kooper.quarryPets.utils.ParticleUtil;
 import codes.kooper.shaded.entitylib.wrapper.WrapperEntity;
 import codes.kooper.shaded.entitylib.wrapper.WrapperLivingEntity;
 import codes.kooper.shaded.nbtapi.NBT;
@@ -128,7 +127,6 @@ public class PetManager {
         pet.addLevel();
         pet.setXp(0);
         player.playSound(player.getLocation(), Sound.ENTITY_WOLF_HOWL, 3, 1.5f);
-        ParticleUtil.createRainbowSpiral(player);
         player.sendMessage(textUtils.colorize("<#91db69><bold>PET LEVEL UP!<reset> <green>Your " + pet.getPetModel().color1() + textUtils.capitalize(pet.getPet()) + " Pet<reset><green> has reached level " + pet.getLevel() + "!"));
     }
 
