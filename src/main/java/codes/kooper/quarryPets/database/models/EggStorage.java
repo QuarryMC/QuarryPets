@@ -2,6 +2,8 @@ package codes.kooper.quarryPets.database.models;
 
 import codes.kooper.koopKore.database.models.BaseEntity;
 import lombok.*;
+import org.bukkit.Bukkit;
+import org.bukkit.entity.Player;
 
 import java.util.*;
 
@@ -13,7 +15,6 @@ public class EggStorage extends BaseEntity {
     private UUID owner;
     private List<Egg> selectedEggs;
     private List<Egg> eggsStorage;
-    private int maxSelected;
     private int maxStorage;
 
     public EggStorage() {
@@ -23,10 +24,22 @@ public class EggStorage extends BaseEntity {
 
     public EggStorage(UUID owner) {
         this.owner = owner;
-        maxSelected = 1;
         eggsStorage = new ArrayList<>();
         selectedEggs = new ArrayList<>();
         maxStorage = 50;
+    }
+
+    public int getMaxSelected() {
+        Player player = Bukkit.getPlayer(owner);
+        if (player == null) return 1;
+
+        if (player.hasPermission("hatchmaster.2")) {
+            return 3;
+        } else if (player.hasPermission("hatchmaster.1")) {
+            return 2;
+        }
+
+        return 1;
     }
 
     @Override

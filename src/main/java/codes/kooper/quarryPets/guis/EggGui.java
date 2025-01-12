@@ -161,9 +161,7 @@ public class EggGui {
         for (int slot : miningLockedSlots) {
             int requiredMined = (i == 0) ? 150000 : 500000; // Adjust mining requirements based on slot
             if (user.getMined() >= requiredMined) {
-                // Slot is unlocked by mining
-                gui.setItem(slot, ItemBuilder.from(Material.EGG).name(textUtils.colorize("<green><bold>Egg Slot Unlocked"))
-                        .lore(textUtils.colorize("<gray>Unlock by mining <white>" + numberUtils.commaFormat(requiredMined) + " <gray>blocks.")).asGuiItem());
+                gui.setItem(slot, ItemBuilder.from(cancelIcon).name(textUtils.colorize("<red><bold>No Egg Selected")).asGuiItem());
             } else {
                 // Slot is locked and requires more mining
                 gui.setItem(slot, ItemBuilder.from(Material.IRON_BARS).name(textUtils.colorize("<red><bold>Egg Slot Locked"))
@@ -194,7 +192,14 @@ public class EggGui {
                     player.getInventory().addItem(egg.getPhysicalEgg());
                     player.playSound(player.getLocation(), Sound.ENTITY_ITEM_PICKUP, 5, 1.3f);
                 } else {
-                    if (eggStorage.getSelectedEggs().size() + 1 > eggStorage.getMaxSelected()) {
+                    int max = eggStorage.getMaxSelected();
+                    if (user.getMined() >= 500000) {
+                        max++;
+                    }
+                    if (user.getMined() >= 150000) {
+                        max++;
+                    }
+                    if (eggStorage.getSelectedEggs().size() + 1 > max) {
                         player.playSound(player.getLocation(), Sound.ENTITY_VILLAGER_NO, 5, 1);
                         player.sendMessage(textUtils.error("You have the maxed amount of eggs equipped."));
                         return;

@@ -1,5 +1,6 @@
 package codes.kooper.quarryPets.managers;
 
+import codes.kooper.koopKore.database.models.User;
 import codes.kooper.koopKore.utils.Tasks;
 import codes.kooper.quarryPets.QuarryPets;
 import codes.kooper.quarryPets.database.models.Pet;
@@ -39,7 +40,7 @@ public class PetManager {
         pets = new LinkedHashMap<>();
         levelingCosts = new HashMap<>();
         spawnedPets = new ConcurrentHashMap<>();
-        loadPets();
+        Tasks.runSyncLater(this::loadPets, 50L);
 
         Tasks.runSyncTimer(() -> spawnedPets.forEach((uuid, pets) -> {
             final Player player = Bukkit.getPlayer(uuid);
@@ -109,23 +110,24 @@ public class PetManager {
         return null;
     }
 
-    public void addXPToPets(Player player, int xp) {
+    public void addXPToPets(Player player, int xp, User user) {
         for (Pet pet : getSelectedPets(player)) {
             int cost = getXPCost(pet);
             if (pet.getXp() + xp >= cost) {
                 int remaining = (pet.getXp() + xp) - cost;
-                levelUpPet(pet, player);
+                levelUpPet(pet, player, user);
                 if (remaining <= 0) return;
-                addXPToPets(player, remaining);
+                addXPToPets(player, remaining, user);
                 return;
             }
             pet.addExp(xp);
         }
     }
 
-    public void levelUpPet(Pet pet, Player player) {
+    public void levelUpPet(Pet pet, Player player, User user) {
         pet.addLevel();
         pet.setXp(0);
+        if (user.hasOption("pet_level_up_notifications")) return;
         player.playSound(player.getLocation(), Sound.ENTITY_WOLF_HOWL, 3, 1.5f);
         player.sendMessage(textUtils.colorize("<#91db69><bold>PET LEVEL UP!<reset> <green>Your " + pet.getPetModel().color1() + textUtils.capitalize(pet.getPet()) + " Pet<reset><green> has reached level " + pet.getLevel() + "!"));
     }

@@ -114,12 +114,12 @@ public class PetGui {
 
         for (int slot : unlockedSlots) {
             Pet pet = petStorage.getSelectedPets().get(unlockedSlots.indexOf(slot)); // Get the selected pet for the slot
-            List<String> lore = pet.getBaseLore();
-            lore.add(""); // Add space between lore
-            lore.add("<green><bold>CLICK TO UNSELECT");
+            List<Component> lore = pet.getBaseLore();
+            lore.add(Component.empty()); // Add space between lore
+            lore.add(textUtils.colorize("<green><bold>CLICK TO UNSELECT"));
 
             GuiItem petItem = ItemBuilder.from(pet.getPhysicalPet())
-                    .lore(textUtils.colorize(lore))
+                    .lore(lore)
                     .asGuiItem();
 
             petItem.setAction((action) -> {
@@ -152,12 +152,12 @@ public class PetGui {
 
         // Add pets
         for (Pet pet : petStorage.getPetsStorage().stream().sorted(Comparator.comparingInt(pet -> ((Pet) pet).getPetModel().index()).reversed()).toList()) {
-            List<String> lore = pet.getBaseLore();
-            lore.add("");
-            lore.add("<green><bold>LEFT-CLICK TO SELECT");
-            lore.add("<red><bold>RIGHT-CLICK TO WITHDRAW");
+            List<Component> lore = pet.getBaseLore();
+            lore.add(Component.empty());
+            lore.add(textUtils.colorize("<green><bold>LEFT-CLICK TO SELECT"));
+            lore.add(textUtils.colorize("<red><bold>RIGHT-CLICK TO WITHDRAW"));
             GuiItem eggItem = ItemBuilder.from(pet.getPhysicalPet())
-                    .lore(textUtils.colorize(lore))
+                    .lore(lore)
                     .asGuiItem();
             eggItem.setAction((action) -> {
                 if (action.isRightClick()) {
@@ -165,7 +165,14 @@ public class PetGui {
                     player.getInventory().addItem(pet.getPhysicalPet());
                     player.playSound(player.getLocation(), Sound.ENTITY_ITEM_PICKUP, 5, 1.3f);
                 } else {
-                    if (petStorage.getSelectedPets().size() + 1 > petStorage.getMaxSelected()) {
+                    int max = petStorage.getMaxSelected();
+                    if (user.getMined() >= 1000000) {
+                        max++;
+                    }
+                    if (user.getMined() >= 5000000) {
+                        max++;
+                    }
+                    if (petStorage.getSelectedPets().size() + 1 > max) {
                         player.playSound(player.getLocation(), Sound.ENTITY_VILLAGER_NO, 5, 1);
                         player.sendMessage(textUtils.error("You have the maxed amount of pets equipped."));
                         return;

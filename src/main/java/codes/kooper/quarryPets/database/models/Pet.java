@@ -1,5 +1,6 @@
 package codes.kooper.quarryPets.database.models;
 
+import codes.kooper.koopKore.enums.TextEffect;
 import codes.kooper.koopKore.item.ItemBuilder;
 import codes.kooper.quarryPets.QuarryPets;
 import codes.kooper.quarryPets.models.EggModel;
@@ -9,6 +10,7 @@ import dev.lone.itemsadder.api.CustomStack;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
+import net.kyori.adventure.text.Component;
 import org.bson.codecs.pojo.annotations.BsonIgnore;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
@@ -49,8 +51,8 @@ public class Pet {
 
     public void addLevel() {
         level++;
-        sellBoost *= ((level * 0.01) + 1);
-        fortuneBoost *= ((level * 0.01) + 1);
+        sellBoost *= ((level * 0.0001) + 1);
+        fortuneBoost *= ((level * 0.0001) + 1);
     }
 
     @BsonIgnore
@@ -64,7 +66,7 @@ public class Pet {
     }
 
     @BsonIgnore
-    public List<String> getBaseLore() {
+    public List<Component> getBaseLore() {
         PetModel petModel = getPetModel();
         EggModel eggModel = getEggModel();
         int cost = QuarryPets.getInstance().getPetManager().getXPCost(this);
@@ -75,17 +77,17 @@ public class Pet {
             progressBar = textUtils.progressBar(xp, cost, 10, "┃", petModel.color1(), "<color:#b2ba90>");
         }
         DecimalFormat df = new DecimalFormat("#.##");
-        List<String> lore = new ArrayList<>(List.of(
-            "<bold>|</bold> <color:#1ebc73>Fortune Boost: <green>+" + df.format(fortuneBoost) + "%",
-            "<bold>|</bold> <color:#1ebc73>Sell Boost: <green>+" + df.format(sellBoost) + "%",
-            "<bold>|</bold> <color:#9babb2>Level " + level + "</color> " + petModel.color1() + "(" + progressBar + petModel.color1() + ")",
-            ""
+        List<Component> lore = new ArrayList<>(List.of(
+            textUtils.colorize(petModel.color1() + "<bold>|</bold> <color:#1ebc73>Fortune Boost: <green>+" + df.format(fortuneBoost) + "%"),
+            textUtils.colorize(petModel.color1() + "<bold>|</bold> <color:#1ebc73>Sell Boost: <green>+" + df.format(sellBoost) + "%"),
+            textUtils.colorize(petModel.color1() + "<bold>|</bold> <color:#9babb2>Level " + level + "</color> " + petModel.color1() + "(" + progressBar + petModel.color1() + ")"),
+            Component.empty()
         ));
         if (luckyBlockNuker > 0) {
-            lore.add("<bold><rainbow>LUCKY BLOCK NUKER RADIUS: <white></bold>" + luckyBlockNuker);
-            lore.add("");
+            lore.add(textUtils.colorize("<bold>").append(textUtils.formatTextEffect(TextEffect.RAINBOW, "LUCKY BLOCK NUKER RADIUS:" )).append(textUtils.colorize(" <white>" + luckyBlockNuker)));
+            lore.add(Component.empty());
         }
-        lore.add(eggModel.getColor1() + "<bold>HATCHED FROM A "  + textUtils.capitalize(eggModel.getKey()).toUpperCase() + " EGG");
+        lore.add(textUtils.colorize(eggModel.getColor1() + "<bold>HATCHED FROM A "  + textUtils.capitalize(eggModel.getKey()).toUpperCase() + " EGG"));
         return lore;
     }
 
@@ -94,11 +96,11 @@ public class Pet {
         PetModel petModel = getPetModel();
         CustomStack stack = CustomStack.getInstance(petModel.model());
         ItemStack petIcon = stack != null ? stack.getItemStack() : new ItemStack(Material.BARRIER);
-        List<String> lore = getBaseLore();
-        lore.addAll(List.of("", "<gray><italic>(( Click to deposit to your vault ))"));
+        List<Component> lore = getBaseLore();
+        lore.addAll(List.of(Component.empty(), textUtils.colorize("<gray><italic>(( Click to deposit to your vault ))")));
         ItemStack item = new ItemBuilder(petIcon)
                 .setName(textUtils.colorize(petModel.color1() + "<bold>" + textUtils.capitalize(petModel.name()).toUpperCase() + " PET"))
-                .setLore(lore)
+                .setLoreComponent(lore)
                 .build();
         NBT.modify(item, (nbt) -> {
             nbt.setString("egg", egg);

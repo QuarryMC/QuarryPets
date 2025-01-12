@@ -5,11 +5,13 @@ import codes.kooper.shaded.nbtapi.NBT;
 import lombok.Data;
 import org.bukkit.Location;
 import org.bukkit.Material;
+import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
 import java.util.List;
 import java.util.Map;
 import java.util.NavigableMap;
+import java.util.TreeMap;
 import java.util.concurrent.ThreadLocalRandom;
 
 import static codes.kooper.koopKore.KoopKore.numberUtils;
@@ -49,16 +51,39 @@ public class EggModel {
         this.eggLocation = eggLocation;
     }
 
-    public String getRandomPet() {
+    public String getRandomPet(Player player) {
         if (petChances == null || petChances.isEmpty()) {
             throw new IllegalStateException("The petChances map is not initialized or is empty.");
         }
 
-        // Generate a random value between 0.0 and the highest key
-        double randomValue = ThreadLocalRandom.current().nextDouble(0.0, petChances.lastKey());
+        double multi = 1.0;
+        if (player.hasPermission("petwhisperer.5")) {
+            multi *= 50;
+        } else if (player.hasPermission("petwhisperer.4")) {
+            multi *= 20;
+        } else if (player.hasPermission("petwhisperer.3")) {
+            multi *= 10;
+        } else if (player.hasPermission("petwhisperer.2")) {
+            multi *= 5;
+        } else if (player.hasPermission("petwhisperer.1")) {
+            multi *= 2;
+        }
+
+        // Create a scaled map of chances
+        NavigableMap<Double, String> scaledPetChances = new TreeMap<>();
+        double scaledTotal = 0.0;
+
+        for (Map.Entry<Double, String> entry : petChances.entrySet()) {
+            double scaledChance = entry.getKey() * multi;
+            scaledTotal += scaledChance;
+            scaledPetChances.put(scaledTotal, entry.getValue());
+        }
+
+        // Generate a random value between 0.0 and the total scaled range
+        double randomValue = ThreadLocalRandom.current().nextDouble(0.0, scaledTotal);
 
         // Get the entry corresponding to the random value
-        Map.Entry<Double, String> entry = petChances.ceilingEntry(randomValue);
+        Map.Entry<Double, String> entry = scaledPetChances.ceilingEntry(randomValue);
 
         // If no entry is found, fallback to the first entry in the map
         if (entry == null) {

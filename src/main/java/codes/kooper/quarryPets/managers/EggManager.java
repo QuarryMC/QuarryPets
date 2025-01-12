@@ -38,7 +38,7 @@ public class EggManager {
     public EggManager() {
         eggs = new LinkedHashMap<>();
         eggOpening = new HashSet<>();
-        loadEggs();
+        Tasks.runSyncLater(this::loadEggs, 40L);
     }
 
     public void loadEggs() {
@@ -162,7 +162,7 @@ public class EggManager {
                     if (shakes == 15) {
                         eggEntity.despawn();
 
-                        String pet = eggModel.getRandomPet();
+                        String pet = eggModel.getRandomPet(player);
                         PetModel petModel = QuarryPets.getInstance().getPetManager().getPetModel(eggModel.getKey(), pet);
 
                         if (petModel.chance() < 0.1) {
